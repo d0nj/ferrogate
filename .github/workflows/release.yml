@@ -1,0 +1,44 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  binaries:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            exe: ferrogate
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            exe: ferrogate.exe
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            exe: ferrogate
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends mold clang
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --release --locked --bin ferrogate
+      - shell: bash
+        run: tar czf ferrogate-${GITHUB_REF#refs/tags/}-${{ matrix.target }}.tar.gz -C target/release ${{ matrix.exe }}
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: ferrogate-*.tar.gz
+          generate_release_notes: true

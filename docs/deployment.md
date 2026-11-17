@@ -52,6 +52,10 @@ needs no entry.
 
 ## Upgrades
 
+Pushing a `v*` tag publishes release binaries (`ferrogate-<tag>-<target>.tar.gz`
+for Linux x86_64, Windows x86_64, macOS arm64) on the GitHub release with
+generated notes. The release profile strips symbols (`strip = "symbols"`).
+
 Migrations run forward on boot. Rollback is restore, never down-migration;
 see `runbooks/backup-restore.md`. Stop the gateway before restoring.
 
