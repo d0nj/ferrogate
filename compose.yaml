@@ -1,0 +1,19 @@
+services:
+  ferrogate:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      FERROGATE_ENCRYPTION_KEY: ${FERROGATE_ENCRYPTION_KEY:?export a 32-byte hex key (openssl rand -hex 32)}
+    volumes:
+      - ferrogate_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  ferrogate_data:

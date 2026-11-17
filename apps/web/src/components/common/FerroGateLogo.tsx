@@ -1,0 +1,32 @@
+import type { SVGProps } from 'react'
+
+import { Icon } from '@astryxdesign/core/Icon'
+
+function FerroGateMark(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox='0 0 48 48' aria-hidden='true' {...props}>
+      <title>FerroGate</title>
+      <rect x='0' y='0' width='48' height='48' rx='12' fill='#14151A' />
+      <rect x='11' y='10' width='26' height='6' rx='3' fill='#EDEEF2' />
+      <rect x='11' y='10' width='6' height='28' rx='3' fill='#EDEEF2' />
+      <rect x='20.5' y='10' width='5.5' height='18' rx='2.75' fill='#EDEEF2' />
+      <rect x='11' y='21' width='15' height='6' rx='3' fill='#EDEEF2' />
+      <polygon points='11,38 17,38 14,44' fill='#EDEEF2' />
+      <polygon points='20.5,28 26,28 23.25,33.5' fill='#EDEEF2' />
+      <path
+        d='M29 27 L36 32.5 L29 38'
+        fill='none'
+        stroke='#F5A524'
+        strokeWidth={5}
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </svg>
+  )
+}
+
+export function FerroGateLogo({ size = 16 }: { size?: number }) {
+  const iconSize = size >= 24 ? 'lg' : size >= 18 ? 'md' : 'sm'
+
+  return <Icon icon={FerroGateMark} size={iconSize} />
+}

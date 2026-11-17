@@ -1,0 +1,30 @@
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[workspace.lints.clippy]
+all = "warn"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+
+# Line tables only: enough for useful backtraces, without the multi-hundred-MB
+# PDBs full debug info produces for each of the seven linked binaries.
+[profile.dev]
+debug = 1
+
+# Dependencies are never stepped through in this workspace, and dropping their
+# debug info is the largest saving in `target/debug/deps`.
+[profile.dev.package."*"]
+debug = false
+
+# The gateway itself keeps full debug info so breakpoints still resolve locals.
+[profile.dev.package.ferrogate]
+debug = 2

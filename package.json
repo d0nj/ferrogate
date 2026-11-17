@@ -1,0 +1,16 @@
+{
+  "name": "ferrogate",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace=@ferrogate/web",
+    "build": "npm run build --workspace=@ferrogate/web",
+    "lint": "npm run lint --workspace=@ferrogate/web",
+    "preview": "npm run preview --workspace=@ferrogate/web"
+  }
+}

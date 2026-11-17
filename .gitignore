@@ -1,0 +1,25 @@
+# Rust
+/target/
+**/*.rs.bk
+
+# Node
+node_modules/
+apps/*/dist/
+npm-debug.log*
+
+# Runtime data
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Written by crates/ferrogate/build.rs to track embedded SPA assets.
+crates/ferrogate/src/assets.stamp
